@@ -1,14 +1,13 @@
 #!/bin/bash 
 
+path=$(find -s ~/Desktop/ | fzf)
 while true; do
-  path=$(find ~/Desktop/ | fzf)
   echo ". -> $path" 
-  echo "-- v j f r--"
+  echo "-- v j f r o g --"
   read -n 1 input
   echo $input
 
   if [[ $input == v ]]; then 
-    cd $path
     vim $path
     break
   elif [[ $input == j ]]; then 
@@ -16,10 +15,17 @@ while true; do
     break
   elif [[ $input == f ]]; then 
     cd $path
-    read $1
+    path=$(find -s . | fzf)
     continue
   elif [[ $input == r ]]; then 
-    break 
+    cd $path
+    path=$(rg . | fzf | awk -F : '{ print $1 }')
+  elif [[ $input == o ]]; then 
+    open $path
+    break
+  elif [[ $input == g ]]; then 
+    open -R $path
+    break
   fi
 done
   
