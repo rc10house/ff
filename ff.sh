@@ -1,12 +1,12 @@
 #!/bin/bash 
 
 # path=$(find -s ~/Desktop/ | fzf)
-path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf)
+path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf --scheme=path --keep-right --border=none --prompt='')
 while true; do
   echo ". -> $path" 
   echo "-- v j f r o g x y z--"
   read -n 1 input
-  echo $input
+  echo ""
 
   if [[ $input == v ]]; then 
     parent_dir=$(dirname $path | awk '{ print $1 }')
@@ -53,7 +53,7 @@ while true; do
     echo "x - execute file"
     echo "y - yank file lines to clipboard"
     echo "z - create gzip tarball of directory"
-
+    break
   elif [[ $input == q ]]; then
     break
   fi
