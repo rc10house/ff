@@ -1,6 +1,7 @@
 #!/bin/bash 
 
-path=$(find -s ~/Desktop/ | fzf)
+# path=$(find -s ~/Desktop/ | fzf)
+path=$(rg ~/Desktop/ --files | fzf)
 while true; do
   echo ". -> $path" 
   echo "-- v j f r o g --"
