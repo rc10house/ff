@@ -1,22 +1,25 @@
 #!/bin/bash 
 
 # path=$(find -s ~/Desktop/ | fzf)
-path=$(rg ~/Desktop/ --files | fzf)
+path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf)
 while true; do
   echo ". -> $path" 
-  echo "-- v j f r o g --"
+  echo "-- v j f r o g x y z--"
   read -n 1 input
   echo $input
 
   if [[ $input == v ]]; then 
+    parent_dir=$(dirname $path | awk '{ print $1 }')
+    cd $parent_dir
     vim $path
     break
   elif [[ $input == j ]]; then 
-    cd $path && ls -l 
+    parent_dir=$(dirname $path | awk '{ print $1 }')
+    cd $parent_dir && ls -l 
     break
   elif [[ $input == f ]]; then 
     cd $path
-    path=$(find -s . | fzf)
+    path=$(rg --files ./ | fzf)
     continue
   elif [[ $input == r ]]; then 
     cd $path
@@ -26,6 +29,32 @@ while true; do
     break
   elif [[ $input == g ]]; then 
     open -R $path
+    break
+  elif [[ $input == x ]]; then 
+    eval $path
+    break
+  elif [[ $input == y ]]; then 
+    cat $path | pbcopy
+    break
+  elif [[ $input == z ]]; then 
+    parent_dir=$(dirname $path | awk '{ print $1 }')
+    echo -n "zip file name: "
+    read zip_name
+    tar -czvf "$zip_name.tar.gz" $parent_dir
+    break
+  elif [[ $input == h ]]; then 
+    echo "Usage:"
+    echo "v - open in vim"
+    echo "j - jump to directory"
+    echo "f - search within directory"
+    echo "r - grep file lines within directory"
+    echo "o - open file"
+    echo "g - open in finder"
+    echo "x - execute file"
+    echo "y - yank file lines to clipboard"
+    echo "z - create gzip tarball of directory"
+
+  elif [[ $input == q ]]; then
     break
   fi
 done
