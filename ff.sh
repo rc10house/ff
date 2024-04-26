@@ -8,6 +8,9 @@ while true; do
   read -n 1 input
   echo ""
 
+  # path=$(echo $path | sed "s/\'/\\\'/g")
+  path=$(echo $path | sed "s/' '/\\ /g")
+
   if [[ $input == 'v' ]]; then 
     parent_dir=$(dirname $path | awk '{ print $1 }')
     cd $parent_dir
@@ -25,7 +28,7 @@ while true; do
     cd $path
     path=$(rg . | fzf | awk -F : '{ print $1 }')
   elif [[ $input == 'o' ]]; then 
-    open $path
+    open "$path"
     break
   elif [[ $input == 'g' ]]; then 
     open -R $path
