@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # path=$(find -s ~/Desktop/ | fzf)
-path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf --scheme=path --keep-right --border=none --prompt='')
+path=$(rg --files ~/Desktop/ ~/Downloads/ | fzf --scheme=path --keep-right --border=none --prompt='')
 while true; do
   echo ". -> $path" 
   echo "-- v j f r o g x y z l--"
@@ -39,6 +39,10 @@ while true; do
   elif [[ $input == 'y' ]]; then 
     cat $path | pbcopy
     break
+  elif [[ $input = 'p' ]]; then
+    # for bash compatability
+    echo -n $path | pbcopy 
+    break
   elif [[ $input == 'z' ]]; then 
     parent_dir=$(dirname $path | awk '{ print $1 }')
     echo -n "zip file name: "
@@ -58,6 +62,7 @@ while true; do
     echo "g - open in finder"
     echo "x - execute file"
     echo "y - yank file lines to clipboard"
+    echo "p - yank path to clipboard"
     echo "z - create gzip tarball of directory"
     echo "l - open file with less"
     break
