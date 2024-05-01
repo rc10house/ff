@@ -4,7 +4,7 @@
 path=$(rg --files ~/Desktop/ ~/Downloads/ | fzf --scheme=path --keep-right --border=none --prompt='')
 while true; do
   echo ". -> $path" 
-  echo "-- v j f r o g x y z l--"
+  echo "-- v j f r o g x y p z l--"
   read -n 1 input
   echo ""
 
