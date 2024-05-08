@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # path=$(find -s ~/Desktop/ | fzf)
-path=$(rg --files ~/Desktop/ ~/Downloads/ | fzf --scheme=path --keep-right --border=none --prompt='')
+path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf --scheme=path --keep-right --border=none --prompt='')
 while true; do
   echo ". -> $path" 
   echo "-- v j f r o g x y p z l--"
@@ -25,8 +25,13 @@ while true; do
     path=$(rg --files ./ | fzf)
     continue
   elif [[ $input == 'r' ]]; then 
-    cd $path
-    path=$(rg . | fzf | awk -F : '{ print $1 }')
+    parent_dir=$(dirname $path | awk '{ print $1 }')
+    cd $parent_dir
+    result=$(rg . -n | fzf)
+    file=$(echo $result | cut -d : -f 1)
+    line_num=$(echo $result | cut -d : -f 2)
+    vim +$line_num $parent_dir/$file -c 'normal zz'
+    break
   elif [[ $input == 'o' ]]; then 
     open "$path"
     break
