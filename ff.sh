@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 # path=$(find -s ~/Desktop/ | fzf)
-path=$(rg --files ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf --scheme=path --keep-right --border=none --prompt='')
+path=$(rg --files ~/.config/ ~/go/ ~/Desktop/ ~/soft/ ~/Downloads/ ~/Documents ~/scripts/ ~/zet/ | fzf --scheme=path --keep-right --border=none --prompt='')
 while true; do
   echo ". -> $path" 
   echo "-- v j f r o g x y p z l--"
@@ -21,7 +21,8 @@ while true; do
     cd $parent_dir && ls -l 
     break
   elif [[ $input == 'f' ]]; then 
-    cd $path
+    parent_dir=$(dirname $path | awk '{ print $1 }')
+    cd $parent_dir
     path=$(rg --files ./ | fzf)
     continue
   elif [[ $input == 'r' ]]; then 
